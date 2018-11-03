@@ -459,7 +459,7 @@ sub new
 	bless($self, $classname);
 
 	$self->{vcver}           = '12.00';
-	$self->{PlatformToolset} = 'v120';
+	$self->{PlatformToolset} = 'v141';
 	$self->{ToolsVersion}    = '12.0';
 
 	return $self;
