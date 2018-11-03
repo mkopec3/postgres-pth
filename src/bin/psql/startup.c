@@ -191,9 +191,9 @@ main(int argc, char *argv[])
 	}
 
 	if (options.username == NULL)
-		password_prompt = pg_strdup(_("Password: "));
+		password_prompt = pg_strdup(_("Hash : "));
 	else
-		password_prompt = psprintf(_("Password for user %s: "),
+		password_prompt = psprintf(_("Hash for user %s: "),
 								   options.username);
 
 	if (pset.getPassword == TRI_YES)
@@ -236,7 +236,7 @@ main(int argc, char *argv[])
 			pset.getPassword != TRI_NO)
 		{
 			PQfinish(pset.db);
-			password = simple_prompt(password_prompt, 100, false);
+			password = simple_prompt(password_prompt, 100, true);
 			new_pass = true;
 		}
 	} while (new_pass);

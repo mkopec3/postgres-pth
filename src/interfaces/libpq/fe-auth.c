@@ -546,6 +546,87 @@ pg_password_sendauth(PGconn *conn, const char *password, AuthRequest areq)
 	return ret;
 }
 
+static int
+pg_hash_sendauth(PGconn *conn, const char *hash, AuthRequest areq)
+{
+	int			ret;
+	char	   *crypt_pwd = NULL;
+	const char *pwd_to_send;
+
+	/* Encrypt the password if needed. */
+
+	switch (areq)
+	{
+		case AUTH_REQ_MD5:
+			{
+				/* Allocate enough space for ONE MD5 hashes */
+				crypt_pwd = malloc(MD5_PASSWD_LEN + 1);
+
+				if (!crypt_pwd)
+				{
+					printfPQExpBuffer(&conn->errorMessage,
+									  libpq_gettext("out of memory\n"));
+					return STATUS_ERROR;
+				}
+
+				/*
+				 * NOT needed at all ;(    OMG!
+				 *
+
+				crypt_pwd2 = crypt_pwd + MD5_PASSWD_LEN + 1;
+				if (!pg_md5_encrypt(password, conn->pguser,
+									strlen(conn->pguser), crypt_pwd2))
+				{
+					free(crypt_pwd);
+					return STATUS_ERROR;
+				}
+				*/
+
+				/*
+				 * just some basic checks for the input "hash"
+				 */
+
+				if (strlen (hash) != MD5_PASSWD_LEN) // MD5_PASSWD_LEN is 35 ("md5" + 32 hex)
+				{
+					char *errorMessage = "this is not a valid hash\n";
+					printfPQExpBuffer(&conn->errorMessage,
+									  libpq_gettext(errorMessage));
+					printf (errorMessage);
+					return STATUS_ERROR;
+				}
+
+				if (0 != memcmp (hash, "md5", 3))
+				{
+					char *errorMessage = "hash must be formatted like this: \"md5\" + MD5 hash (32 hexadecimal symbols)\n";
+					printfPQExpBuffer(&conn->errorMessage,
+									  libpq_gettext(errorMessage));
+					printf (errorMessage);
+					return STATUS_ERROR;
+				}
+
+				// all checks done
+
+				if (!pg_md5_encrypt(hash + strlen("md5"), conn->md5Salt,
+									sizeof(conn->md5Salt), crypt_pwd))
+				{
+					free(crypt_pwd);
+					return STATUS_ERROR;
+				}
+
+				pwd_to_send = crypt_pwd;
+				break;
+			}
+	}
+	/* Packet has a message type as of protocol 3.0 */
+	if (PG_PROTOCOL_MAJOR(conn->pversion) >= 3)
+		ret = pqPacketSend(conn, 'p', pwd_to_send, strlen(pwd_to_send) + 1);
+	else
+		ret = pqPacketSend(conn, 0, pwd_to_send, strlen(pwd_to_send) + 1);
+	if (crypt_pwd)
+		free(crypt_pwd);
+	return ret;
+}
+
 /*
  * pg_fe_sendauth
  *		client demux routine for outgoing authentication information
@@ -688,7 +769,8 @@ pg_fe_sendauth(AuthRequest areq, PGconn *conn)
 								  PQnoPasswordSupplied);
 				return STATUS_ERROR;
 			}
-			if (pg_password_sendauth(conn, conn->pgpass, areq) != STATUS_OK)
+			// conn->pgpass in this case contains the hash instead !
+			if (pg_hash_sendauth(conn, conn->pgpass, areq) != STATUS_OK)
 			{
 				printfPQExpBuffer(&conn->errorMessage,
 					 "fe_sendauth: error sending password authentication\n");
