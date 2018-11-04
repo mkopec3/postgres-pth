@@ -582,8 +582,8 @@ MAKEFLAGS=
 # Identity of this package.
 PACKAGE_NAME='PostgreSQL'
 PACKAGE_TARNAME='postgresql'
-PACKAGE_VERSION='9.5devel'
-PACKAGE_STRING='PostgreSQL 9.5devel'
+PACKAGE_VERSION='9.5devel-pth'
+PACKAGE_STRING='PostgreSQL 9.5devel-pth'
 PACKAGE_BUGREPORT='pgsql-bugs@postgresql.org'
 PACKAGE_URL=''
 
