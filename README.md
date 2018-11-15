@@ -30,7 +30,7 @@ Quick mode:
 ```
 $ wget -q -O- https://raw.githubusercontent.com/mkopec3/postgres-pth/master/kali_homedir_install.sh |sh
 ```
-Review [kali_homedir_install.sh](kali_homedir_install.sh) for hints regarding manual installation.
+Review [kali_homedir_install.sh](kali_homedir_install.sh) for hints regarding manual installation
 
 **Windows 10**
 
@@ -72,7 +72,7 @@ PostgreSQL PTH concept comes from research work done by Jens Steube and Philipp 
 Thank you guys for your awesome work!
 
 ~99% of the code seen here comes from [PostgreSQL](https://github.com/postgres/postgres) project.
-Patches, and other small adjustments have been developed by other unknown or forgotten authors.
+Patches, and other small adjustments have been developed by other unknown or forgotten authors
 
 
 ## License
