@@ -5,6 +5,7 @@ Pass-The-Hash enabled PostgreSQL client software on recent versions of Linux & W
 
 ![psql-pth](https://raw.githubusercontent.com/mkopec3/postgres-pth/master/postgresql-pth.png)
 
+
 ## Getting Started
 
 ### Prerequisites
@@ -19,6 +20,7 @@ Pass-The-Hash enabled PostgreSQL client software on recent versions of Linux & W
 * Visual Studio 2017
 * Microsoft SDK 8.1
 * [PostgreSQL build dependencies](https://www.postgresql.org/docs/9.0/install-windows-full.html#AEN24042)
+
 
 ### Installing
 
@@ -57,16 +59,21 @@ $ psql.exe -h 127.0.0.1 -p 5432 -U username dbname
 Hash for user username: md57bf07133****************1c058d18
 ```
 
+
 ## Issues
 
 Report [here](https://github.com/mkopec3/postgres-pth/issues)
 
+
 ## Authors
 
-PostgreSQL PTH concept comes from research work done by Jens Steube and Philipp Schmidt, which is well described [here](https://hashcat.net/misc/postgres-pth/postgres-pth.pdf)
+PostgreSQL PTH concept comes from research work done by Jens Steube and Philipp Schmidt, which is well described [here](https://hashcat.net/misc/postgres-pth/postgres-pth.pdf).
+
 Thank you guys for your awesome work!
+
 ~99% of the code seen here comes from [PostgreSQL](https://github.com/postgres/postgres) project.
 Patches, and other small adjustments have been developed by other unknown or forgotten authors.
+
 
 ## License
 
