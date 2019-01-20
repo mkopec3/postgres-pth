@@ -45,6 +45,7 @@ From VS2017 Developer Command Prompt:
 Copy \Release\libpq\libpq.dll, \Release\psqlpsql.exe, and vcruntime140.dll (you need to find it) files to the same selected directory
 
 **Docker**
+
 Refer to Usage section
 
 
