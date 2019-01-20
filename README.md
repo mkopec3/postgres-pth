@@ -21,6 +21,8 @@ Pass-The-Hash enabled PostgreSQL client software on recent versions of Linux & W
 * Microsoft SDK 8.1
 * [PostgreSQL build dependencies](https://www.postgresql.org/docs/9.0/install-windows-full.html#AEN24042)
 
+**Docker**
+* Docker :)
 
 ### Installing
 
@@ -42,6 +44,9 @@ From VS2017 Developer Command Prompt:
 
 Copy \Release\libpq\libpq.dll, \Release\psqlpsql.exe, and vcruntime140.dll (you need to find it) files to the same selected directory
 
+**Docker**
+Refer to Usage section
+
 
 ### Usage
 
@@ -56,6 +61,13 @@ Hash for user username: md57bf07133****************1c058d18
 
 ```
 $ psql.exe -h 127.0.0.1 -p 5432 -U username dbname
+Hash for user username: md57bf07133****************1c058d18
+```
+
+**Docker**
+
+```
+$ docker run -it mkopec3/postgres-pth -h X.X.X.X -p 5432 -U username dbname
 Hash for user username: md57bf07133****************1c058d18
 ```
 
